@@ -19,7 +19,6 @@ export default class App extends React.Component {
       userName: null,
       profile: null,
       questions: {},
-      responses: {},
       questionsStatus: [
         {id: 1, name: 'Opened'},
         {id: 2, name: 'Pending'},
@@ -32,6 +31,7 @@ export default class App extends React.Component {
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleResponsePost = this.handleResponsePost.bind(this);
+    this.updateQuestionStatus = this.updateQuestionStatus.bind(this);
   }
 
   handleLogIn(e) {
@@ -119,6 +119,16 @@ export default class App extends React.Component {
     })
   };
 
+  updateQuestionStatus(questionId, newStatus) {
+    console.log(questionId, newStatus);
+    let questions = this.state.questions;
+    questions[questionId].questionStatusId = newStatus;
+    console.log(this.state);
+    this.setState(questions, () => {
+      console.log('State updated...');
+    });
+  }
+
   handleResponsePost(dataObj) {
     $.ajax({
       url: '/responses/',
@@ -127,8 +137,18 @@ export default class App extends React.Component {
       contentType: 'application/json; charset=utf-8',
     })
     .done((data) => {
-      let responses = this.state.responses;
-      this.setState({ responses });
+      const questionId = dataObj.questionId;
+      let questions = this.state.questions;
+      if (questions[questionId].responses) {
+        questions[questionId].responses.push(dataObj);
+      } else {
+        questions[questionId].responses = [dataObj];
+      }
+      questions[questionId].questionStatusId = dataObj.questionStatusId;
+      
+      this.setState(questions, () => {
+        console.log('State updated...');
+      });
     })
     .fail(function() {
       alert('error with the ajax post request');
@@ -142,6 +162,7 @@ export default class App extends React.Component {
         {React.cloneElement(this.props.children, {
           mainState: this.state,
           getQuestions: this.getQuestions,
+          updateQuestionStatus: this.updateQuestionStatus,
           postQuestion: this.postQuestion,
           handleLogIn: this.handleLogIn,
           handleResponsePost: this.handleResponsePost,

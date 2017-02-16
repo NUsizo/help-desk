@@ -8,9 +8,12 @@ export default class QuestionActionResponse extends React.Component {
 
   handleSubmit(e) {
       e.preventDefault();
+      const questionId = e.target.questionId.value;
       const response = e.target.response.value;
-      if (!question) return;
       const dataToSend = {
+          userId: this.props.mainState.userId,
+          questionId: questionId,
+          questionStatusId: 2,
           response: response,
       }
       e.target.response.value = '';
@@ -18,14 +21,13 @@ export default class QuestionActionResponse extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log("rendering the q response");
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="input-group">
-          <input name="response" id="response "type="response" className="form-control" />
+          <input type="hidden" name="questionId" value={this.props.questionId} />
+          <input name="response" id="response" type="response" className="form-control" />
           <span className="input-group-btn">
-            <button className="btn btn-default" type="button">Answer</button>
+            <button className="btn btn-default" type="submit">Answer</button>
           </span>
         </div>
       </form>

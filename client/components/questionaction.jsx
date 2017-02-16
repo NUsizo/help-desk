@@ -13,13 +13,16 @@ export default class QuestionAction extends React.Component {
   }
 
   render() {
-    const status = this.props.status;
+    const status = parseInt(this.props.status);
     let actionComponent = null;
+    console.log('status', status);
     if (status === 1 || status === 3) {
-        actionComponent = <QuestionActionResponse handleResponsePost={this.props.handleResponsePost}/>;
+        console.log('1 or 3');
+        actionComponent = <QuestionActionResponse mainState={this.props.mainState} handleResponsePost={this.props.handleResponsePost} questionId={this.props.questionId}  />;
     }
     if (status === 2) {
-        actionComponent = <QuestionActionChangeStatus />;
+        console.log('2');
+        actionComponent = <QuestionActionChangeStatus updateQuestionStatus={this.props.updateQuestionStatus} questionId={this.props.questionId} />;
     }
     return (
       <div>

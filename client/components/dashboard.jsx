@@ -19,32 +19,32 @@ export default class Dashboard extends React.Component {
     if (Object.keys(questions).length > 0) {
 
       const filtered1 = Object.values(questions).filter((question) => {
-        return question.questionStatusId === 1;
+        return parseInt(question.questionStatusId) === 1;
       });
       const filtered2 = Object.values(questions).filter((question) => {
-        return question.questionStatusId === 2;
+        return parseInt(question.questionStatusId) === 2;
       });
       const filtered3 = Object.values(questions).filter((question) => {
-        return question.questionStatusId === 3;
+        return parseInt(question.questionStatusId) === 3;
       });
       const filtered4 = Object.values(questions).filter((question) => {
-        return question.questionStatusId === 4;
+        return parseInt(question.questionStatusId) === 4;
       });
 
       filtered1.forEach((question, idx) => {
-        arr1.push(<Question key={question.id} status={1} data={question} handleResponsePost={this.props.handleResponsePost} />);
+        arr1.push(<Question key={question.id} mainState={this.props.mainState} status={1} data={question} handleResponsePost={this.props.handleResponsePost} updateQuestionStatus={this.props.updateQuestionStatus} />);
       });
       arr1.reverse();
       filtered2.forEach((question, idx) => {
-        arr2.push(<Question key={question.id} status={2} data={question} handleResponsePost={this.props.handleResponsePost} />);
+        arr2.push(<Question key={question.id} mainState={this.props.mainState} status={2} data={question} handleResponsePost={this.props.handleResponsePost} updateQuestionStatus={this.props.updateQuestionStatus} />);
       });
       arr2.reverse();
       filtered3.forEach((question, idx) => {
-        arr3.push(<Question key={question.id} status={3} data={question} handleResponsePost={this.props.handleResponsePost} />);
+        arr3.push(<Question key={question.id} mainState={this.props.mainState} status={3} data={question} handleResponsePost={this.props.handleResponsePost} updateQuestionStatus={this.props.updateQuestionStatus} />);
       });
       arr3.reverse();
       filtered4.forEach((question, idx) => {
-        arr4.push(<Question key={question.id} status={4} data={question} handleResponsePost={this.props.handleResponsePost} />);
+        arr4.push(<Question key={question.id} mainState={this.props.mainState} status={4} data={question} handleResponsePost={this.props.handleResponsePost} updateQuestionStatus={this.props.updateQuestionStatus} />);
       });
       arr4.reverse();
     }
